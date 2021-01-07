@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch-a-Sketch</title>
     <link rel="stylesheet" href="resources/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway&display=swap" rel="stylesheet">
 </head>
 <body>
     <h1>Etch-a-Sketch</h1>
     <div class="sketch-pad-container">
         <div class = "options-container">
-            <div class="options-title">
-                <h2 style ="text-align: center;">CUSTOMIZE</h2>
-            </div>
             <div class = "rainbow-option">
                 <button id = "rainbow">RAINBOW PEN</button>
             </div>
@@ -28,16 +27,21 @@
             <div class="gray-option">
                 <button id="gray">GREYSCALE</button>
             </div>
-            <div class ="canvas-size-container">
-                <input type="range" min = "2" max = "100" value = "16" id="canvas-size">
+            <div class="clear-container">
+                <button id="clear">Clear Board</button>
             </div>
         </div>
         <div class = "sketch-pad">
         </div>
     </div>
-    <div class = "clear-container">
-        <button id="clear">Clear Board</button>
+    <div class="canvas-size-container">
+        <p style = "margin-right: 30px;">Canvas Size:</p>
+        <input type="range" min="2" max="100" value="8" id="canvas-size">
+        <span style = "margin-left: 30px;" id = "canvas-size-value">8</span>
     </div>
+    <footer>
+        <p style = "text-align: center;"> Developed by Daniel Rodriguez</p>
+    </footer>
 </body>
 <script src="resources/javascript/app.js"></script>
 </html>

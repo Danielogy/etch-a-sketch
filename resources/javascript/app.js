@@ -3,11 +3,13 @@ const clearPad = document.querySelector('#clear');
 const btns = document.querySelectorAll('button');
 const colorPicker = document.querySelector('#pen-color');
 const slider = document.querySelector('#canvas-size');
+const sliderValue = document.querySelector('#canvas-size-value');
+
 let currentColor = [245, 222, 179, 1];
 let rainbowPenActive = false;
 let grayScaleActive = false;
 
-createGrid(16); //create initial grid
+createGrid(8); //create initial grid
 
 //creates grid
 /* Explanation:
@@ -44,10 +46,11 @@ function createGrid(num){
             content.addEventListener('mouseover', e => {
                 if(rainbowPenActive)
                     rainbowPen();
-                else if(grayScaleActive)
+                if(grayScaleActive)
                     grayScale(e);
                 else if(!grayScaleActive)
                     e.target.style.opacity = 1;
+
                 e.target.style.background = `rgba(${currentColor})`;
             });
         }
@@ -64,6 +67,7 @@ function createGrid(num){
      */
 function hexToRGB(hex){
     let color = [];
+
     let r = parseInt(hex.slice(1, 3), 16);
     let g = parseInt(hex.slice(3, 5), 16);
     let b = parseInt(hex.slice(5, 7), 16);
@@ -82,7 +86,6 @@ function clear(){
 
 //randomize the red, green, blue, and alpha values to the currentColor
 function rainbowPen(){
-    grayScaleActive = false;
     let red = (Math.floor(Math.random()*155)+100);
     let green = (Math.floor(Math.random()*255)+000);
     let blue = Math.floor(Math.random() * 0);
@@ -104,20 +107,30 @@ function blackPen(){
     currentColor = [0,0,0,1];
 }
 
+//grey scale function
+/*  check if the opacity is not 1. If not one, begin to increase the 
+ *  the opacity by .1 on each pass. 
+ *  
+ *  if the opacity is 1 AND the color is black, then that means that 
+ *  the pixel is already black and does not need to increase opacity.
+ * 
+ *  if the opacity is 1 but not black, then turn it black and begin the opacity at 
+ *  .1
+ * 
+*/
 function grayScale(e){
-    rainbowPenActive = false;
     let that = e.target;
     if(parseFloat(that.style.opacity) <= 0.9){
         that.style.background = `rgba(${currentColor = [0, 0, 0,]})`;
         that.style.opacity = parseFloat(that.style.opacity) + 0.1;
     }   
-    
+
     else if((parseFloat(that.style.opacity) == 1) && (that.style.background == "rgb(0, 0, 0)"))
         return;
 
     else{
         that.style.background = `rgba(${currentColor = [0, 0, 0,]})`;
-        that.style.opacity = 0.2;
+        that.style.opacity = 0.1;
     }
 }
 
@@ -132,16 +145,20 @@ slider.addEventListener('mouseup', e => {
 //check each button corresponding to the user's pen option & excute function
 btns.forEach(btn => {
     btn.addEventListener('click', e => {
-        if (e.target.id == "rainbow")
+        if (e.target.id == "rainbow"){
             rainbowPenActive = true;
+            grayScaleActive = false;
+        }
         else if (e.target.id == "clear")
             clear();
         else if (e.target.id == "eraser")
             eraser();
         else if (e.target.id == "black")
             blackPen();
-        else if(e.target.id == "gray")
+        else if(e.target.id == "gray"){
             grayScaleActive = true;
+            rainbowPenActive = false;
+        }
     });
 });
 
@@ -151,4 +168,9 @@ colorPicker.addEventListener('input', e => {
     rainbowPenActive = false;
     const hex = e.target.value;
     currentColor = hexToRGB(hex);
+});
+
+//output slider value to the screen
+slider.addEventListener('input', e =>{
+    sliderValue.textContent = e.target.value;
 });

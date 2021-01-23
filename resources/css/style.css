@@ -91,13 +91,6 @@ input[type = "range"]:active{
     cursor: grabbing;
 }   
 
-footer{
-    position: absolute;
-    bottom: 10px;
-    width: 100%;
-    height: 20px;
-}
-
 @media screen and (max-width: 560px){
     .sketch-pad{
         width: 90vw;
@@ -133,9 +126,5 @@ footer{
     .canvas-size-container{
         width: 60%;
         margin-bottom: 5vh;
-    }
-
-    footer{
-        display: none;
     }
 }
